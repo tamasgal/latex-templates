@@ -2,27 +2,45 @@
 
 % display input without prompts:
 ((* block input scoped *))
-\hrulefill\\
-Input:
-\begin{Verbatim}[commandchars=\\\{\}]
+\tcbset{coltitle=white!50!white,
+        colbacktitle=white!75!black,
+        colback=black!2!white,
+        colframe=white!75!black,
+        fonttitle=\bfseries}
+\begin{tcolorbox}[title=Input,
+                  sharp corners,
+                  rounded corners=north]
+\begin{Verbatim}[fontsize=\footnotesize,commandchars=\\\{\}]
 ((( cell.source | highlight_code(strip_verbatim=True) )))
 \end{Verbatim}
+\end{tcolorbox}
 ((* endblock input *))
 
 % treat execute_result (output with prompt) as display_data (output without prompt)
 ((* block execute_result scoped *))
+\tcbset{coltitle=white!50!red,
+        colbacktitle=white!25!white,
+        colback=black!2!white,
+        colframe=white!75!black,
+        fonttitle=\bfseries,
+        sharp corners=north}
+\begin{tcolorbox}[title=Output,
+                  sharp corners,
+                  rounded corners=south]
+\begin{footnotesize}
     ((* block display_data scoped *))
-        \hrulefill\\
-        Output:
         ((( super() )))
     ((* endblock display_data *))
+\end{footnotesize}
+\end{tcolorbox}
 ((* endblock execute_result *))
 
 ((* block docclass *))
 \documentclass{scrartcl}
 
-
+\usepackage{amsmath}
 \usepackage[pdftex]{graphicx}
+\usepackage{tcolorbox}
 \usepackage{placeins}
 
 \AtBeginDocument{
