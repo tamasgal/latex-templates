@@ -6,8 +6,8 @@
         colbacktitle=white!75!black,
         colback=black!2!white,
         colframe=white!75!black,
-        fonttitle=\bfseries}
-\begin{tcolorbox}[title=Input,
+        fonttitle=\bfseries\scriptsize}
+\begin{tcolorbox}[title=Input:,
                   sharp corners,
                   rounded corners=north]
 \begin{Verbatim}[fontsize=\scriptsize,commandchars=\\\{\}]
@@ -16,24 +16,75 @@
 \end{tcolorbox}
 ((* endblock input *))
 
-% treat execute_result (output with prompt) as display_data (output without prompt)
+
 ((* block execute_result scoped *))
+    ((*- for type in output.data | filter_data_type -*))
+        ((*- if type in ['text/plain']*))
+\tcbset{coltitle=white!50!green,
+        colbacktitle=white!25!white,
+        colback=black!2!white,
+        colframe=white!75!black,
+        fonttitle=\bfseries\scriptsize,
+        sharp corners=north}
+\begin{tcolorbox}[sharp corners,
+                  rounded corners=south,
+                  colupper=green!50!magenta]
+\scriptsize{Return:}
+\tcblower
+\begin{scriptsize}
+\begin{Verbatim}[commandchars=\\\{\}]
+((( output.data['text/plain'] | escape_latex )))
+\end{Verbatim}
+\end{scriptsize}
+\end{tcolorbox}
+        ((* else -*))
+            ((* block data_priority scoped *))
+            ((( super() )))
+            ((* endblock *))
+        ((*- endif -*))
+    ((*- endfor -*))
+((* endblock execute_result *))
+
+% Display stream ouput with coloring
+((* block stream *))
+\tcbset{coltitle=white!50!blue,
+        colbacktitle=white!25!white,
+        colback=black!2!white,
+        colframe=white!75!black,
+        fonttitle=\bfseries\scriptsize,
+        sharp corners=north}
+\begin{tcolorbox}[sharp corners,
+                  rounded corners=south,
+                  colupper=blue!50!white]
+\scriptsize{Output:}
+\tcblower
+\begin{scriptsize}
+    \begin{Verbatim}[commandchars=\\\{\}]
+((( output.text | escape_latex | ansi2latex )))
+    \end{Verbatim}
+\end{scriptsize}
+\end{tcolorbox}
+((* endblock stream *))
+
+
+% Display error ouput with coloring
+((* block error *))
 \tcbset{coltitle=white!50!red,
         colbacktitle=white!25!white,
         colback=black!2!white,
         colframe=white!75!black,
-        fonttitle=\bfseries,
+        fonttitle=\bfseries\scriptsize,
         sharp corners=north}
-\begin{tcolorbox}[title=Output,
-                  sharp corners,
-                  rounded corners=south]
+\begin{tcolorbox}[sharp corners,
+                  rounded corners=south,
+                  colupper=red!50!white]
+\scriptsize{Error}
+\tcblower
 \begin{scriptsize}
-    ((* block display_data scoped *))
-        ((( super() )))
-    ((* endblock display_data *))
+((( super() )))
 \end{scriptsize}
 \end{tcolorbox}
-((* endblock execute_result *))
+((* endblock error *))
 
 ((* block docclass *))
 \documentclass{scrartcl}
