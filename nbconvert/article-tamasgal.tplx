@@ -10,7 +10,7 @@
 \begin{tcolorbox}[title=Input,
                   sharp corners,
                   rounded corners=north]
-\begin{Verbatim}[fontsize=\footnotesize,commandchars=\\\{\}]
+\begin{Verbatim}[fontsize=\scriptsize,commandchars=\\\{\}]
 ((( cell.source | highlight_code(strip_verbatim=True) )))
 \end{Verbatim}
 \end{tcolorbox}
@@ -27,11 +27,11 @@
 \begin{tcolorbox}[title=Output,
                   sharp corners,
                   rounded corners=south]
-\begin{footnotesize}
+\begin{scriptsize}
     ((* block display_data scoped *))
         ((( super() )))
     ((* endblock display_data *))
-\end{footnotesize}
+\end{scriptsize}
 \end{tcolorbox}
 ((* endblock execute_result *))
 
